@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, \
-    QLineEdit, QPushButton, QMainWindow
+    QLineEdit, QPushButton, QMainWindow, QTableWidget
 from PyQt6.QtGui import QAction
 import sys
 
@@ -18,6 +18,15 @@ class MainWindow(QMainWindow):
         help_menu_item.addAction(about_action)
         # This line is required for Mac systems to display the about action
         # about_action.setMenuRole(QAction.MenuRole.NoRole)
+
+        self.table = QTableWidget()
+        self.table.setColumnCount(4)
+        self.table.setHorizontalHeaderLabels(("Id", "Name", "Course", "Mobile"))
+        self.setCentralWidget(self.table)
+
+
+    def load_data(self):
+        self.table
 
 
 app = QApplication(sys.argv)

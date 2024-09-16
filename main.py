@@ -1,5 +1,5 @@
 from idlelib.search import SearchDialog
-
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, \
     QLineEdit, QPushButton, QMainWindow, QTableWidget, QTableWidgetItem, \
     QDialog, QVBoxLayout, QComboBox
@@ -123,7 +123,19 @@ class SearchDialog(QDialog):
 
     def search_student(self):
         name = self.student_name.text()
-        print(name)
+        #print(name)
+        connection = sqlite3.connect("database.db")
+        cursor = connection.cursor()
+        result = cursor.execute("SELECT * FROM students WHERE name = ?", (name,))
+        rows = list(result)
+        print(rows)
+        items = main_window.table.findItems(name, Qt.MatchFlag.MatchFixedString)
+        for item in items:
+            print(item)
+            main_window.table.item(item.row(), 1).setSelected(True)
+
+        cursor.close()
+        connection.close()
 
 
 app = QApplication(sys.argv)
